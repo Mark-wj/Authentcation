@@ -33,7 +33,7 @@ export default function AuthForm({ isLogin: initialIsLogin, onClose, onSuccess }
     const endpoint = isLoginInternal ? '/api/login/' : '/api/register/';
 
     try {
-      const res = await fetch(`http://localhost:8000${endpoint}`, {
+      const res = await fetch(`authentication-backend-production-bf85.up.railway.app${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
