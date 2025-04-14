@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import Modal from './Modal';
 
-export default function AuthForm({ isLogin: initialIsLogin, onClose, onSuccess }) {
+export default function AuthForm({ isLogin: initialIsLogin, onSuccess }) {
   const [isLoginInternal, setIsLoginInternal] = useState(initialIsLogin);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +34,7 @@ export default function AuthForm({ isLogin: initialIsLogin, onClose, onSuccess }
     const endpoint = isLoginInternal ? '/api/login/' : '/api/register/';
 
     try {
-      const res = await fetch(`authentication-backend-production-bf85.up.railway.app${endpoint}`, {
+      const res = await fetch(`https://auth-backend-production-936e.up.railway.app${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -184,21 +185,13 @@ export default function AuthForm({ isLogin: initialIsLogin, onClose, onSuccess }
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl shadow-lg max-w-sm w-full">
-            <h2 className="text-lg font-semibold mb-4 text-center">{modalMessage}</h2>
-            <button
-              onClick={() => {
-                setShowModal(false);
-                onClose();
-              }}
-              className="block w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-            >
-              OK
-            </button>
-          </div>
-        </div>
+         <Modal
+           isOpen={showModal}
+           onClose={() => setShowModal(false)}
+           message={modalMessage}
+         />
       )}
     </div>
   );
 }
+
